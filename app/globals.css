@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+
+body {
+  background: #FBF7F1;
+  color: #2A2A2A;
+  font-family: "Noto Sans TC", system-ui, sans-serif;
+}
+
+.brush-title {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  background: #FFF; color: #2A2A2A;
+  border: 1px solid #EAE0D2;
+  transition: all 0.15s;
+}
+.btn:hover { background: #F5E8DD; }
+.btn-primary { background: #3FA15E; color: #FFF; border-color: #3FA15E; }
+.btn-primary:hover { background: #348952; }
+.btn-accent { background: #F5E8DD; color: #B85F40; border-color: #F0DBC4; }
+.btn-accent:hover { background: #F0DBC4; }
