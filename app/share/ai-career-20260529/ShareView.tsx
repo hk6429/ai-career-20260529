@@ -113,7 +113,9 @@ export default function ShareView() {
             📚 講義與資源
           </a>
           <button className="btn btn-primary" onClick={enterPresent}>▶ 全螢幕播放</button>
-          <a href="/share/ai-career-20260529/detail" className="btn btn-accent">📋 詳細課程紀錄（給想細讀的人）</a>
+          <a href="/share/ai-career-20260529/board" className="btn btn-accent">📝 互動白板（學生）</a>
+          <a href="/share/ai-career-20260529/teacher" className="btn">🎛 老師控制台</a>
+          <a href="/share/ai-career-20260529/detail" className="btn">📋 詳細課程紀錄</a>
           <a href={M.printHref} className="btn">🖨 列印 / 存 PDF</a>
           <a href={M.fbUrl} target="_blank" rel="noopener" className="btn">📘 大乃老師 FB</a>
         </div>
@@ -361,9 +363,77 @@ export default function ShareView() {
         </aside>
       </div>
 
+      <section id="resources" className="max-w-5xl mx-auto px-4 py-12 border-t border-warm-line">
+        <h2 className="brush-title text-2xl text-warm-accentDark mb-6">📚 講義與資源</h2>
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="bg-warm-card rounded-2xl border border-warm-line p-5">
+            <h3 className="font-bold text-warm-accentDark mb-3">🛠 AI 工具入口</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li><a href="https://gemini.google.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Google Gemini ↗</a> — 國中生帳號可直接登入</li>
+              <li><a href="https://chatgpt.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">ChatGPT ↗</a> — 國際最大宗</li>
+              <li><a href="https://claude.ai/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Claude ↗</a> — 寫長文較強</li>
+              <li><a href="https://copilot.microsoft.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Microsoft Copilot ↗</a> — 學校 Office 帳號可用</li>
+              <li><a href="https://www.perplexity.ai/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Perplexity ↗</a> — 會給來源連結，適合做功課</li>
+            </ul>
+          </div>
+
+          <div className="bg-warm-card rounded-2xl border border-warm-line p-5">
+            <h3 className="font-bold text-warm-accentDark mb-3">🎨 AI 創作工具</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li><a href="https://gemini.google.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Gemini ↗</a> — 文生圖、生影片（Imagen / Veo）</li>
+              <li><a href="https://www.midjourney.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Midjourney ↗</a> — 最強生圖（付費）</li>
+              <li><a href="https://canva.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Canva ↗</a> — 內建 AI 做海報 / 簡報</li>
+              <li><a href="https://notebooklm.google.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">NotebookLM ↗</a> — 上傳資料生 Podcast / 摘要</li>
+              <li><a href="https://elevenlabs.io/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">ElevenLabs ↗</a> — AI 配音</li>
+            </ul>
+          </div>
+
+          <div className="bg-warm-card rounded-2xl border border-warm-line p-5">
+            <h3 className="font-bold text-warm-accentDark mb-3">🔍 判斷力 ‧ 事實查核</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li><a href="https://tfc-taiwan.org.tw/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">台灣事實查核中心 ↗</a></li>
+              <li><a href="https://www.mygopen.com/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">MyGoPen 美玉姨 ↗</a> — LINE 加好友幫忙查</li>
+              <li><a href="https://cofacts.tw/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Cofacts 真的假的 ↗</a> — 群眾查核</li>
+              <li><a href="https://fakenews.cy.gov.tw/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">監察院假訊息辨識網 ↗</a></li>
+            </ul>
+          </div>
+
+          <div className="bg-warm-card rounded-2xl border border-warm-line p-5">
+            <h3 className="font-bold text-warm-accentDark mb-3">📰 課堂引用的新聞</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li><a href="https://www.reuters.com/technology/meta-cuts-thousands-jobs-2024/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Meta 裁員報導（Reuters）↗</a></li>
+              <li><a href="https://www.bloomberg.com/news/articles/ibm-pause-hiring-ai" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">IBM 凍結 7,800 職位（Bloomberg）↗</a></li>
+              <li><a href="https://www.theverge.com/2024/1/8/24030728/duolingo-layoffs-ai-translators" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">Duolingo 裁翻譯（The Verge）↗</a></li>
+              <li><a href="https://www.linkedin.com/business/learning/blog/top-skills-and-courses/most-in-demand-skills" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">LinkedIn 軟實力報告 ↗</a></li>
+            </ul>
+          </div>
+
+          <div className="bg-warm-card rounded-2xl border border-warm-line p-5">
+            <h3 className="font-bold text-warm-accentDark mb-3">📖 延伸閱讀</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li>《與成功有約》柯維（七個習慣）— 班級書櫃可借</li>
+              <li>《原子習慣》James Clear — 持續學習的方法論</li>
+              <li>《釣愚》Akerlof / Shiller — 學會看穿廣告與訊息</li>
+              <li>《被討厭的勇氣》岸見一郎 — 同理與表達的底層</li>
+            </ul>
+          </div>
+
+          <div className="bg-warm-card rounded-2xl border border-warm-line p-5">
+            <h3 className="font-bold text-warm-accentDark mb-3">🔗 大乃老師</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li><a href="https://www.facebook.com/hk6429" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">FB 粉專 ↗</a> — 教學現場、AI 應用、自我領導力</li>
+              <li><a href="https://naicheng.tw/" target="_blank" rel="noopener" className="text-warm-accentDark hover:underline">個人網站 ↗</a></li>
+              <li>本日課程網址：<code className="bg-warm-soft px-2 py-0.5 rounded text-warm-accentDark">{M.shortUrl}</code></li>
+              <li>互動白板：<a href="/share/ai-career-20260529/board" className="text-warm-accentDark hover:underline">/board</a></li>
+              <li>老師控制台：<a href="/share/ai-career-20260529/teacher" className="text-warm-accentDark hover:underline">/teacher</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <footer className="text-center py-12 text-warm-muted text-sm border-t border-warm-line mt-8">
         <p>{M.presenter} ‧ {M.role}</p>
-        <p className="text-xs mt-2 opacity-70">課程紀錄 ‧ 2026.05.29 ‧ 新竹縣精華國中</p>
+        <p className="text-xs mt-2 opacity-70">課程紀錄 ‧ 2026.05.29（五）‧ 新竹縣精華國中</p>
       </footer>
 
       {isPresenting && (

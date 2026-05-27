@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "A3 數位素養回流研習 ‧ 一日全紀錄",
-  description: "2026.05.23 新竹國賓大飯店 ‧ 大乃老師現場筆記",
+  title: "會 AI 的人，淘汰不會 AI 的人 — 國中生 AI 職涯課",
+  description: "2026.05.29（五）新竹縣精華國中 ‧ 大乃老師 ‧ 90 分鐘 AI 職涯預備課程",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
