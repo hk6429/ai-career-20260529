@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import WordCloud from "./WordCloud";
 
 type Question = { id: string; prompt: string; active: boolean };
 type Answer = { id: string; questionId: string; group: string; text: string; createdAt: number };
@@ -13,8 +14,10 @@ export default function TeacherClient() {
   const [active, setActive] = useState<Question | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [zoom, setZoom] = useState<Answer | null>(null);
-  const [view, setView] = useState<"grid" | "paged">("grid");
+  const [view, setView] = useState<"grid" | "paged" | "cloud">("grid");
   const [pageIdx, setPageIdx] = useState(0);
+  const [newQ, setNewQ] = useState("");
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     let stop = false;
@@ -75,6 +78,33 @@ export default function TeacherClient() {
   function prevPage() { setPageIdx((i) => Math.max(0, i - 1)); }
   function nextPage() { setPageIdx((i) => Math.min(sortedAnswers.length - 1, i + 1)); }
 
+  async function addQuestion(activate: boolean) {
+    const prompt = newQ.trim();
+    if (!prompt) return;
+    setAdding(true);
+    try {
+      const r = await fetch("/api/board/questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, activate }),
+      });
+      const j = await r.json();
+      setAll(j.all);
+      setActive(j.active);
+      setNewQ("");
+    } finally {
+      setAdding(false);
+    }
+  }
+
+  async function deleteQuestion(id: string) {
+    if (!confirm("刪除這個題目（含已收到的答案）？")) return;
+    const r = await fetch(`/api/board/questions?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+    const j = await r.json();
+    setAll(j.all);
+    setActive(j.active);
+  }
+
   return (
     <main className="min-h-screen bg-warm-bg">
       <header className="bg-warm-header text-white py-4 px-6 flex flex-wrap items-center justify-between gap-3">
@@ -117,16 +147,23 @@ export default function TeacherClient() {
             {all.map((q, i) => {
               const cur = q.id === active?.id;
               return (
-                <li key={q.id}>
+                <li key={q.id} className="group relative">
                   <button
                     onClick={() => setActiveQ(q.id)}
-                    className={`w-full text-left px-2 py-2 rounded text-xs transition leading-tight ${
+                    className={`w-full text-left px-2 py-2 pr-7 rounded text-xs transition leading-tight ${
                       cur ? "bg-warm-accent text-white" : "hover:bg-warm-soft text-warm-ink"
                     }`}
                   >
                     <div className="font-mono text-[10px] opacity-70">Q{i + 1}</div>
                     <div className="line-clamp-2">{q.prompt}</div>
                   </button>
+                  <button
+                    onClick={() => deleteQuestion(q.id)}
+                    title="刪除題目"
+                    className={`absolute top-1.5 right-1 w-5 h-5 rounded text-xs opacity-0 group-hover:opacity-100 transition ${
+                      cur ? "text-white/70 hover:text-white hover:bg-white/20" : "text-warm-muted hover:text-red-600 hover:bg-red-50"
+                    }`}
+                  >✕</button>
                 </li>
               );
             })}
@@ -141,6 +178,29 @@ export default function TeacherClient() {
               </button>
             </li>
           </ol>
+
+          <div className="mt-3 pt-3 border-t border-warm-line">
+            <h3 className="text-xs font-bold text-warm-muted mb-1 px-1">➕ 臨時新增題目</h3>
+            <textarea
+              value={newQ}
+              onChange={(e) => setNewQ(e.target.value.slice(0, 200))}
+              rows={3}
+              placeholder="打一個臨時想問的問題⋯"
+              className="w-full border border-warm-line rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-warm-accent resize-none"
+            />
+            <div className="flex gap-1.5 mt-1.5">
+              <button
+                onClick={() => addQuestion(false)}
+                disabled={!newQ.trim() || adding}
+                className="flex-1 text-xs bg-warm-soft hover:bg-warm-line text-warm-ink rounded px-2 py-1.5 disabled:opacity-40"
+              >加入清單</button>
+              <button
+                onClick={() => addQuestion(true)}
+                disabled={!newQ.trim() || adding}
+                className="flex-1 text-xs bg-warm-accent hover:opacity-80 text-white rounded px-2 py-1.5 disabled:opacity-40"
+              >加入並開問</button>
+            </div>
+          </div>
         </aside>
 
         {/* CENTER: answer wall */}
@@ -172,6 +232,12 @@ export default function TeacherClient() {
                 >
                   ▶ 一頁一張
                 </button>
+                <button
+                  onClick={() => setView("cloud")}
+                  className={`px-3 py-1 rounded ${view === "cloud" ? "bg-warm-accent text-white" : "bg-warm-soft text-warm-ink"}`}
+                >
+                  ☁ 文字雲
+                </button>
               </div>
             </div>
           </div>
@@ -196,6 +262,15 @@ export default function TeacherClient() {
                   <p className="text-warm-ink leading-relaxed whitespace-pre-line line-clamp-6">{a.text}</p>
                 </button>
               ))}
+            </div>
+          )}
+
+          {view === "cloud" && (
+            <div className="bg-warm-card rounded-2xl border border-warm-line p-4">
+              <WordCloud texts={sortedAnswers.map((a) => a.text)} />
+              <p className="text-center text-xs text-warm-muted mt-2">
+                字越大＝越多人提到 ‧ 自動中文斷詞 ‧ 取前 60 詞
+              </p>
             </div>
           )}
 

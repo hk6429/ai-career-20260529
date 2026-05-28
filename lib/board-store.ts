@@ -52,6 +52,24 @@ export async function setQuestions(qs: Question[]) {
   else memory.questions = qs;
 }
 
+export async function addQuestion(prompt: string): Promise<Question> {
+  const q: Question = {
+    id: `q-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    prompt: prompt.slice(0, 200).trim(),
+    active: false,
+  };
+  const { all } = await getActive();
+  await setQuestions([...all, q]);
+  return q;
+}
+
+export async function removeQuestion(id: string) {
+  const { all, active } = await getActive();
+  await setQuestions(all.filter((q) => q.id !== id));
+  await clearAnswers(id);
+  if (active?.id === id) await setActive(null);
+}
+
 export async function listAnswers(questionId: string): Promise<Answer[]> {
   if (hasKv()) {
     const items = await kv.lrange<Answer>(ans(questionId), 0, -1);
