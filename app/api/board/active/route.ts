@@ -4,7 +4,11 @@ import { DEFAULT_QUESTIONS } from "@/content/board-questions";
 
 export const runtime = "nodejs";
 
-const CACHE = "public, max-age=0, s-maxage=2, stale-while-revalidate=4";
+const CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=0, must-revalidate",
+  "CDN-Cache-Control": "public, s-maxage=2, stale-while-revalidate=4",
+  "Vercel-CDN-Cache-Control": "public, s-maxage=2, stale-while-revalidate=4",
+};
 
 async function ensureQuestions() {
   const { all } = await getActive();
@@ -16,7 +20,7 @@ async function ensureQuestions() {
 export async function GET() {
   await ensureQuestions();
   const { active, all } = await getActive();
-  return NextResponse.json({ active, all }, { headers: { "Cache-Control": CACHE } });
+  return NextResponse.json({ active, all }, { headers: CACHE_HEADERS });
 }
 
 export async function POST(req: Request) {
@@ -25,5 +29,5 @@ export async function POST(req: Request) {
   await ensureQuestions();
   await setActive(id);
   const { active, all } = await getActive();
-  return NextResponse.json({ active, all }, { headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json({ active, all }, { headers: { "Cache-Control": "no-store", "CDN-Cache-Control": "no-store" } });
 }
