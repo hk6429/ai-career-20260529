@@ -108,14 +108,16 @@ export default function ShareView() {
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2">
           <a
             href={M.resourcesHref}
+            target="_blank"
+            rel="noopener"
             className="text-warm-accentDark hover:underline text-sm font-medium px-2"
           >
             📚 講義與資源
           </a>
           <button className="btn btn-primary" onClick={enterPresent}>▶ 全螢幕播放</button>
-          <a href="/share/ai-career-20260529/board" className="btn btn-accent">📝 互動白板（學生）</a>
-          <a href="/share/ai-career-20260529/teacher" className="btn">🎛 老師控制台</a>
-          <a href="/share/ai-career-20260529/detail" className="btn">📋 詳細課程紀錄</a>
+          <a href="/share/ai-career-20260529/board" target="_blank" rel="noopener" className="btn btn-accent">📝 互動白板（學生）</a>
+          <a href="/share/ai-career-20260529/teacher" target="_blank" rel="noopener" className="btn">🎛 老師控制台</a>
+          <a href="/share/ai-career-20260529/detail" target="_blank" rel="noopener" className="btn">📋 詳細課程紀錄</a>
           <a href={M.printHref} className="btn">🖨 列印 / 存 PDF</a>
           <a href={M.fbUrl} target="_blank" rel="noopener" className="btn">📘 大乃老師 FB</a>
         </div>
@@ -480,6 +482,22 @@ export default function ShareView() {
             onClick={() => idx < slides.length - 1 && setCurrentId(slides[idx + 1].id)}
             className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl disabled:opacity-20"
           >›</button>
+
+          <div className="flex items-center justify-center gap-4 px-6 pb-5">
+            <button
+              disabled={idx <= 0}
+              onClick={() => idx > 0 && setCurrentId(slides[idx - 1].id)}
+              className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium disabled:opacity-20"
+            >← 上一頁</button>
+            <span className="font-mono text-white/60 text-sm">
+              {String(current.num).padStart(2, "0")} / {String(slides.length - 1).padStart(2, "0")}
+            </span>
+            <button
+              disabled={idx >= slides.length - 1}
+              onClick={() => idx < slides.length - 1 && setCurrentId(slides[idx + 1].id)}
+              className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium disabled:opacity-20"
+            >下一頁 →</button>
+          </div>
         </div>
       )}
     </main>
