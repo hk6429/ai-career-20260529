@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
-import { addQuestion, removeQuestion, getActive, setActive } from "@/lib/board-store";
+import { addQuestion, removeQuestion, getActive, setActive, setQuestions } from "@/lib/board-store";
+import { DEFAULT_QUESTIONS } from "@/content/board-questions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+export async function PUT() {
+  await setQuestions(DEFAULT_QUESTIONS);
+  await setActive(null);
+  const { active, all } = await getActive();
+  return NextResponse.json({ active, all });
+}
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
