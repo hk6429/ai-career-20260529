@@ -458,8 +458,8 @@ export default function ShareView() {
             </div>
           </div>
 
-          <div className="flex-1 flex items-center justify-center px-6 pb-6">
-            <div className="w-full max-w-[1600px] aspect-[16/9] relative bg-warm-soft rounded-lg overflow-hidden shadow-2xl">
+          <div className="flex-1 min-h-0 flex items-center justify-center px-6 pb-2">
+            <div className="h-full max-h-full w-auto max-w-full aspect-[16/9] relative bg-warm-soft rounded-lg overflow-hidden shadow-2xl">
               <Image src={current.image} alt={current.title} fill className="object-cover" priority />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6">
                 <h2 className="text-2xl md:text-4xl font-bold mb-1">{current.title}</h2>
